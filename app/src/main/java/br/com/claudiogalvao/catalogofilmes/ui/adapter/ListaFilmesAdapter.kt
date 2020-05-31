@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import br.com.claudiogalvao.catalogofilmes.R
 import br.com.claudiogalvao.catalogofilmes.model.Filme
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.filme_item.view.*
 
 class ListaFilmesAdapter(val context: Context, val filmes: ArrayList<Filme>) : BaseAdapter() {
@@ -17,7 +18,9 @@ class ListaFilmesAdapter(val context: Context, val filmes: ArrayList<Filme>) : B
 
         val inflator = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val filmeView = inflator.inflate(R.layout.filme_item, null)
-        filmeView.filme_item_imageview.setImageResource(filme.capa)
+
+        Picasso.get().load(filme.capaUrl).into(filmeView.filme_item_imageview)
+
         return filmeView
     }
 

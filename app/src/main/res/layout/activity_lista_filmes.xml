@@ -8,7 +8,7 @@
     tools:context=".ui.activity.ListaFilmesActivity">
 
     <GridView
-        android:id="@+id/lista_filmes_gridview"
+        android:id="@+id/activity_lista_filmes_gridview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:numColumns="auto_fit"
