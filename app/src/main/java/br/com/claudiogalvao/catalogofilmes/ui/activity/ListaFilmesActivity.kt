@@ -20,38 +20,42 @@ class ListaFilmesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lista_filmes)
 
-        val call = RetrofitInitializer().filmeService().buscaFilmesPopulares()
-        call.enqueue(object : Callback<RetornoRequisicao> {
-            override fun onFailure(call: Call<RetornoRequisicao>, t: Throwable) {
-                Toast.makeText(this@ListaFilmesActivity,
-                    "Falha na requisição",
-                    Toast.LENGTH_LONG).show()
-            }
-
-            override fun onResponse(call: Call<RetornoRequisicao>, response: Response<RetornoRequisicao>) {
-                response?.body()?.let {
-                    var listaFilmes: ArrayList<Filme> = it.getResults()
-                    for(filme in listaFilmes) {
-                        filmes.add(filme)
-                    }
-                    Toast.makeText(this@ListaFilmesActivity,
-                        "${filmes[0].toString()} ",
-                        Toast.LENGTH_LONG).show()
-                }
-            }
-
-        })
-
-//        val adapter = ListaFilmesAdapter(this, filmes)
-//        activity_lista_filmes_gridview.adapter = adapter
-
+        carregaFilmesNaLista()
     }
 
-    fun filmesExemplo() {
-//        filmes.add(Filme("The Nun", "https://br.web.img3.acsta.net/pictures/18/07/18/21/53/1348208.jpg"))
-//        filmes.add(Filme("Capitã Marvel", "https://br.web.img2.acsta.net/pictures/19/02/04/18/35/1468867.jpg"))
-//        filmes.add(Filme("Star Wars", "https://upload.wikimedia.org/wikipedia/pt/a/ae/Starwars_06.jpg"))
-//        filmes.add(Filme("Get Out", "https://i.pinimg.com/originals/66/20/90/66209037dff62f122f2f6050e9ed2815.jpg"))
-//        filmes.add(Filme("Avengers: End Game", "https://conteudo.imguol.com.br/c/entretenimento/90/2019/04/23/poster-brasileiro-de-vingadores-ultimato-1556045801213_v2_1225x1800.jpg"))
+    private fun carregaFilmesNaLista() {
+        val call = RetrofitInitializer().filmeService().buscaFilmesPopulares()
+
+        call.enqueue(object : Callback<RetornoRequisicao> {
+            override fun onFailure(call: Call<RetornoRequisicao>, t: Throwable) {
+                Toast.makeText(
+                    this@ListaFilmesActivity,
+                    "Falha na requisição",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+
+            override fun onResponse(
+                call: Call<RetornoRequisicao>,
+                response: Response<RetornoRequisicao>
+            ) {
+                response.body()?.let {
+                    populaListaDeFilmes(it)
+                    configuraLista()
+                }
+            }
+        })
+    }
+
+    private fun populaListaDeFilmes(it: RetornoRequisicao) {
+        var listaFilmes: ArrayList<Filme> = it.getResults()
+        for (filme in listaFilmes) {
+            filmes.add(filme)
+        }
+    }
+
+    private fun configuraLista() {
+        val adapter = ListaFilmesAdapter(this, filmes)
+        activity_lista_filmes_gridview.adapter = adapter
     }
 }

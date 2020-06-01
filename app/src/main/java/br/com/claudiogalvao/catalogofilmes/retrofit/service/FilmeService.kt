@@ -10,4 +10,5 @@ interface FilmeService {
 
     @GET("popular?api_key=696a8a555845ed882929281feba3dabf&page=1&language=pt-BR")
     fun buscaFilmesPopulares() : Call<RetornoRequisicao>
+
 }

@@ -4,7 +4,7 @@ import br.com.claudiogalvao.catalogofilmes.R
 import java.util.*
 
 class Filme(private val id: Int,
-            val title: String,
+            private val title: String,
             private val original_title: String,
             private val original_language: String,
             private val release_date: String, val popularity: Double,
@@ -16,6 +16,10 @@ class Filme(private val id: Int,
             private val overview: String,
             private val backdrop_path: String,
             private val poster_path: String) {
+
+    fun getCapa() : String {
+        return "https://image.tmdb.org/t/p/w500$poster_path"
+    }
 
     override fun toString(): String {
         return "$title - $release_date - $vote_average"
