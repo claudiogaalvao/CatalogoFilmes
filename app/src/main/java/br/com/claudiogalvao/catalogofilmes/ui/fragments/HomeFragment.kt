@@ -50,7 +50,7 @@ class HomeFragment : Fragment() {
             override fun onFailure(call: Call<RetornoRequisicao>, t: Throwable) {
                 Toast.makeText(
                     context,
-                    "Falha na requisição",
+                    "Falha ao carregar lista de filmes...",
                     Toast.LENGTH_LONG
                 ).show()
             }
@@ -84,10 +84,9 @@ class HomeFragment : Fragment() {
     }
 
     private fun chamaDetalhesFilme(filme: Filme) {
-        Toast.makeText(this.requireContext(), filme.getTitulo() + " clicado!", Toast.LENGTH_SHORT).show()
-        //var intent = Intent(this.requireContext(), DetalhesFilmeActivity::class.java)
-        //intent.putExtra("filme", filme)
-        //startActivity(intent)
+        var intent = Intent(this.requireContext(), DetalhesFilmeActivity::class.java)
+        intent.putExtra("filme", filme)
+        startActivity(intent)
     }
 
 }
