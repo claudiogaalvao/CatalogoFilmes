@@ -44,13 +44,13 @@ class HomeFragment : Fragment() {
     }
 
     private fun carregaFilmesNaLista() {
-        val call = RetrofitInitializer().filmeService().buscaFilmesPopulares()
+        val call = RetrofitInitializer(this.requireContext()).filmeService().buscaFilmesPopulares()
 
         call.enqueue(object : Callback<RetornoRequisicao> {
             override fun onFailure(call: Call<RetornoRequisicao>, t: Throwable) {
                 Toast.makeText(
                     context,
-                    "Falha ao carregar lista de filmes...",
+                    "Sem conexão...",
                     Toast.LENGTH_LONG
                 ).show()
             }

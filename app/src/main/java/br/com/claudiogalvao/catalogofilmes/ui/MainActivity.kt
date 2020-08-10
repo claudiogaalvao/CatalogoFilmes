@@ -1,5 +1,8 @@
 package br.com.claudiogalvao.catalogofilmes.ui
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
