@@ -1,14 +1,12 @@
 package br.com.claudiogalvao.catalogofilmes.ui.adapter
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import android.widget.Toast
 import br.com.claudiogalvao.catalogofilmes.R
-import br.com.claudiogalvao.catalogofilmes.model.Filme
+import br.com.claudiogalvao.catalogofilmes.domain.model.Filme
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.filme_item.view.*
 

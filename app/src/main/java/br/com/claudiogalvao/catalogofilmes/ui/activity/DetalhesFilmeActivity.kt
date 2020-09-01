@@ -3,11 +3,9 @@ package br.com.claudiogalvao.catalogofilmes.ui.activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import br.com.claudiogalvao.catalogofilmes.R
-import br.com.claudiogalvao.catalogofilmes.model.Filme
+import br.com.claudiogalvao.catalogofilmes.domain.model.Filme
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_detalhes_filme.*
-import kotlinx.android.synthetic.main.filme_item.view.*
-import java.io.Serializable
 
 class DetalhesFilmeActivity : AppCompatActivity() {
 

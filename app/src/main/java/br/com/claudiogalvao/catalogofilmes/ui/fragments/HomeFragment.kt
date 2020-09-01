@@ -2,16 +2,24 @@ package br.com.claudiogalvao.catalogofilmes.ui.fragments
 
 import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import br.com.claudiogalvao.catalogofilmes.MyApplication
 import br.com.claudiogalvao.catalogofilmes.R
-import br.com.claudiogalvao.catalogofilmes.model.Filme
+import br.com.claudiogalvao.catalogofilmes.domain.model.Filme
 import br.com.claudiogalvao.catalogofilmes.model.RetornoRequisicao
-import br.com.claudiogalvao.catalogofilmes.retrofit.RetrofitInitializer
+import br.com.claudiogalvao.catalogofilmes.data.remote.retrofit.RetrofitInitializer
+import br.com.claudiogalvao.catalogofilmes.di.FilmesModule
+import br.com.claudiogalvao.catalogofilmes.domain.callback.FilmesCallback
 import br.com.claudiogalvao.catalogofilmes.ui.activity.DetalhesFilmeActivity
 import br.com.claudiogalvao.catalogofilmes.ui.adapter.ListaFilmesAdapter
 import br.com.claudiogalvao.catalogofilmes.ui.adapter.OnClickListener
@@ -38,37 +46,31 @@ class HomeFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         carregaFilmesNaLista()
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     private fun carregaFilmesNaLista() {
-        val call = RetrofitInitializer(this.requireContext()).filmeService().buscaFilmesPopulares()
+        FilmesModule.filmesCasoDeUso.executar(object : FilmesCallback {
+            override fun onSuccess(listaFilmes: List<Filme>) {
+                populaListaDeFilmes(listaFilmes)
+                configuraLista()
+            }
 
-        call.enqueue(object : Callback<RetornoRequisicao> {
-            override fun onFailure(call: Call<RetornoRequisicao>, t: Throwable) {
+            override fun onError(e: Throwable) {
                 Toast.makeText(
                     context,
                     "Sem conexão...",
                     Toast.LENGTH_LONG
                 ).show()
             }
-
-            override fun onResponse(
-                call: Call<RetornoRequisicao>,
-                response: Response<RetornoRequisicao>
-            ) {
-                response.body()?.let {
-                    populaListaDeFilmes(it)
-                    configuraLista()
-                }
-            }
-        })
+        }, false)
     }
 
-    private fun populaListaDeFilmes(it: RetornoRequisicao) {
-        var listaFilmes: ArrayList<Filme> = it.getResults()
+    private fun populaListaDeFilmes(listaFilmes: List<Filme>) {
         for (filme in listaFilmes) {
             filmes.add(filme)
         }
@@ -84,7 +86,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun chamaDetalhesFilme(filme: Filme) {
-        var intent = Intent(this.requireContext(), DetalhesFilmeActivity::class.java)
+        val intent = Intent(this.requireContext(), DetalhesFilmeActivity::class.java)
         intent.putExtra("filme", filme)
         startActivity(intent)
     }

@@ -1,14 +1,13 @@
-package br.com.claudiogalvao.catalogofilmes.model
+package br.com.claudiogalvao.catalogofilmes.domain.model
 
-import br.com.claudiogalvao.catalogofilmes.R
 import java.io.Serializable
-import java.util.*
 
 class Filme(private val id: Int,
             private val title: String,
             private val original_title: String,
             private val original_language: String,
-            private val release_date: String, val popularity: Double,
+            private val release_date: String,
+            private val popularity: Double,
             private val vote_count: Int,
             private val vote_average: Double,
             private val adult: Boolean,
@@ -41,6 +40,5 @@ class Filme(private val id: Int,
     override fun toString(): String {
         return "$title - $release_date - $vote_average"
     }
-
 
 }

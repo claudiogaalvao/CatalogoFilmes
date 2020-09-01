@@ -5,8 +5,11 @@ import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.room.Room
 import br.com.claudiogalvao.catalogofilmes.R
+import br.com.claudiogalvao.catalogofilmes.data.local.bd.config.AppDataBase
 import br.com.claudiogalvao.catalogofilmes.ui.fragments.FavouritesFragment
 import br.com.claudiogalvao.catalogofilmes.ui.fragments.HomeFragment
 import br.com.claudiogalvao.catalogofilmes.ui.fragments.ProfileFragment

@@ -1,10 +1,8 @@
-package br.com.claudiogalvao.catalogofilmes.retrofit.service
+package br.com.claudiogalvao.catalogofilmes.data.remote.retrofit.service
 
-import br.com.claudiogalvao.catalogofilmes.model.Filme
 import br.com.claudiogalvao.catalogofilmes.model.RetornoRequisicao
 import retrofit2.Call
 import retrofit2.http.GET
-import retrofit2.http.Path
 
 interface FilmeService {
 
