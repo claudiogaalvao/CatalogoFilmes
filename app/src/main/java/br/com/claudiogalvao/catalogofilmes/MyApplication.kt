@@ -25,7 +25,9 @@ class MyApplication : Application() {
         val localDatasource = LocalDatasource(database.filmeDAO())
         val remoteDatasource = RemoteDatasource(this)
         val repository =
-            FilmesRepository(datasourceLocal = localDatasource, datasourceRemoto = remoteDatasource)
+            FilmesRepository(context = this,
+                datasourceLocal = localDatasource,
+                datasourceRemoto = remoteDatasource)
         FilmesModule.filmesCasoDeUso = ListaFilmesCasoDeUso(repository)
     }
 }

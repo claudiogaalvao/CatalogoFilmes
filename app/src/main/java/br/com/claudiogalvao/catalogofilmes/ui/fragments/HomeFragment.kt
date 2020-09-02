@@ -67,7 +67,7 @@ class HomeFragment : Fragment() {
                     Toast.LENGTH_LONG
                 ).show()
             }
-        }, false)
+        }, true)
     }
 
     private fun populaListaDeFilmes(listaFilmes: List<Filme>) {

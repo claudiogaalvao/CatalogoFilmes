@@ -2,7 +2,7 @@ package br.com.claudiogalvao.catalogofilmes.domain.model
 
 import java.io.Serializable
 
-class Filme(private val id: Int,
+class Filme constructor(private val id: Int,
             private val title: String,
             private val original_title: String,
             private val original_language: String,
@@ -12,7 +12,7 @@ class Filme(private val id: Int,
             private val vote_average: Double,
             private val adult: Boolean,
             private val video: Boolean,
-            private val genre_ids: Array<Int>,
+            private val genre_ids: Array<Int> = emptyArray(),
             private val overview: String,
             private val backdrop_path: String,
             private val poster_path: String) : Serializable {

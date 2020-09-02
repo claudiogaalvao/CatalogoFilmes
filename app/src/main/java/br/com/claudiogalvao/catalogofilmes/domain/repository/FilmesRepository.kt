@@ -27,11 +27,15 @@ class FilmesRepository(private val context: Context,
         datasourceLocal.listaFilmes(object : FilmesCallback {
             override fun onSuccess(listaFilmes: List<Filme>) {
                 callback.onSuccess(listaFilmes)
+                Log.i("room", "Dados do cash carregados")
                 datasourceRemoto.listaFilmes(callback)
+                Log.i("room", "Buscando dados remoto...")
             }
 
             override fun onError(e: Throwable) {
+                Log.i("room", "Falha ao carregar dados do cash")
                 datasourceRemoto.listaFilmes(callback)
+                Log.i("room", "Tentando buscar dados remoto...")
             }
 
         })
