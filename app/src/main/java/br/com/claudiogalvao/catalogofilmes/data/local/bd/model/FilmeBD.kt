@@ -17,4 +17,5 @@ data class FilmeBD(@PrimaryKey val id: Int,
                    val genre_ids: Int = 0,
                    val overview: String,
                    val backdrop_path: String,
-                   val poster_path: String)
+                   val poster_path: String,
+                   val isFavorite: Boolean = false)

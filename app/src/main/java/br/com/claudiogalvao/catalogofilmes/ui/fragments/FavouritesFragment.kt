@@ -1,13 +1,18 @@
 package br.com.claudiogalvao.catalogofilmes.ui.fragments
 
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.annotation.RequiresApi
 
 import br.com.claudiogalvao.catalogofilmes.R
+import br.com.claudiogalvao.catalogofilmes.di.FilmesModule
+import br.com.claudiogalvao.catalogofilmes.domain.callback.FilmesCallback
 import br.com.claudiogalvao.catalogofilmes.domain.model.Filme
 import br.com.claudiogalvao.catalogofilmes.ui.adapter.ListaFilmesAdapter
 import br.com.claudiogalvao.catalogofilmes.ui.adapter.OnClickListener
@@ -32,34 +37,57 @@ class FavouritesFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_favourites, container, false)
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        populaListaDeFilmes()
+        carregaFilmesNaLista()
         configuraLista()
     }
 
-    private fun populaListaDeFilmes() {
-        for(i in 0 until 3) {
-            val filme = Filme(i, "Teste", "Skylines", "en", "2020-12-18",
-                75.818, 28, 6.7, false, false, emptyArray(),
-                "Quando um vírus ameaça transformar os híbridos alienígenas amigáveis que agora vivem na Terra contra os humanos, " +
-                        "a capitã Rose Corley deve liderar uma equipe de mercenários de elite em uma missão ao mundo alienígena para salvar o " +
-                        "que resta da humanidade.", "/3ombg55JQiIpoPnXYb2oYdr6DtP.jpg", "/2W4ZvACURDyhiNnSIaFPHfNbny3.jpg");
-            Log.i("filme", filme.getCapa());
-            filmes.add(i, filme);
-            Log.i("filme", i.toString())
+    @RequiresApi(Build.VERSION_CODES.M)
+    private fun carregaFilmesNaLista() {
+        FilmesModule.filmesCasoDeUso.executar(object : FilmesCallback {
+            override fun onSuccess(listaFilmes: List<Filme>) {
+                if(listaFilmes.isNotEmpty()) {
+                    populaListaDeFilmes(listaFilmes)
+                    configuraLista()
+                }
+            }
+
+            override fun onError(e: Throwable) {
+                Toast.makeText(
+                    context,
+                    "Sem conexão...",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }, true)
+    }
+
+    private fun populaListaDeFilmes(listaFilmes: List<Filme>) {/*
+        Log.i("filme", "Lista de filmes retornados: ${listaFilmes.size}")
+        // APAGAR
+        for (i in 0 until 10) {
+            if(i < 3) {
+                listaFilmes.elementAt(i).setIsFavorite(true)
+                Log.i("filme", "Filme adicionado como favorito ${i}")
+            }
+        }*/
+        // Manter
+        for(filme in listaFilmes) {
+            if(filme.isFavorite) {
+                Log.i("filme", "Filme favorito: ${filme.getTitulo()}")
+                filmes.add(filme)
+            }
         }
     }
 
     private fun configuraLista() {
-        Log.i("filme", "Configurando lista...")
-        Log.i("filme", filmes.size.toString())
         val adapter = ListaFilmesAdapter(this.requireContext(), filmes)
 
         adapter.onClickListener = onClickListener
 
         activity_filmes_favoritos_gridview.adapter = adapter
-        Log.i("filme", "Lista configurada")
     }
 
 }

@@ -17,13 +17,14 @@ import kotlinx.android.synthetic.main.activity_detalhes_filme.*
 
 class DetalhesFilmeActivity : AppCompatActivity() {
 
+    private lateinit var filme: Filme;
     private lateinit var favoriteItemMenu: MenuItem;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detalhes_filme)
 
-        val filme: Filme? = intent.getSerializableExtra("filme") as Filme
+        filme = intent.getSerializableExtra("filme") as Filme
 
         Picasso.get().load(filme?.getCapa()).into(activity_detalhes_filme_capa)
         activity_detalhes_filme_titulo.text = filme?.getTitulo()
@@ -51,11 +52,13 @@ class DetalhesFilmeActivity : AppCompatActivity() {
 
     private fun changeIconFavorite() {
         if(favoriteItemMenu.icon.constantState!!.equals(resources.getDrawable(R.drawable.ic_favorite).constantState)) {
+            filme.setIsFavorite(false);
             Toast.makeText(this, "Removido dos favoritos", Toast.LENGTH_SHORT).show()
             favoriteItemMenu.setIcon(R.drawable.ic_favorite_border)
             return;
         }
 
+        filme.setIsFavorite(true);
         Toast.makeText(this, "Adicionado aos favoritos", Toast.LENGTH_SHORT).show()
         favoriteItemMenu.setIcon(R.drawable.ic_favorite)
     }

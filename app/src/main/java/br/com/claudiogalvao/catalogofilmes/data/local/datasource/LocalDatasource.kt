@@ -3,6 +3,7 @@ package br.com.claudiogalvao.catalogofilmes.data.local.datasource
 import br.com.claudiogalvao.catalogofilmes.data.local.bd.dao.FilmeDAO
 import br.com.claudiogalvao.catalogofilmes.data.mapper.FilmesMapper
 import br.com.claudiogalvao.catalogofilmes.domain.callback.FilmesCallback
+import br.com.claudiogalvao.catalogofilmes.domain.model.Filme
 
 class LocalDatasource(val dao: FilmeDAO) {
 
@@ -11,5 +12,10 @@ class LocalDatasource(val dao: FilmeDAO) {
             FilmesMapper.mapFilmesBD(it)!!
         }
         callback.onSuccess(filmes)
+    }
+
+    fun atualizarFilme(filme: Filme) {
+        val filmeBD = FilmesMapper.mapFilmes(filme);
+        dao.update(filmeBD)
     }
 }

@@ -2,20 +2,21 @@ package br.com.claudiogalvao.catalogofilmes.domain.model
 
 import java.io.Serializable
 
-class Filme constructor(private val id: Int,
-            private val title: String,
-            private val original_title: String,
-            private val original_language: String,
-            private val release_date: String,
-            private val popularity: Double,
-            private val vote_count: Int,
-            private val vote_average: Double,
-            private val adult: Boolean,
-            private val video: Boolean,
-            private val genre_ids: Array<Int> = emptyArray(),
-            private val overview: String,
-            private val backdrop_path: String,
-            private val poster_path: String) : Serializable {
+class Filme constructor(val id: Int,
+            val title: String,
+            val original_title: String,
+            val original_language: String,
+            val release_date: String,
+            val popularity: Double,
+            val vote_count: Int,
+            val vote_average: Double,
+            val adult: Boolean,
+            val video: Boolean,
+            val genre_ids: Array<Int> = emptyArray(),
+            val overview: String,
+            val backdrop_path: String,
+            val poster_path: String,
+            var isFavorite: Boolean = false) : Serializable {
 
     fun getCapa() : String {
         return "https://image.tmdb.org/t/p/w500$poster_path"
@@ -35,6 +36,10 @@ class Filme constructor(private val id: Int,
 
     fun getSinopse() : String {
         return overview
+    }
+
+    fun setIsFavorite(isFavorite: Boolean) {
+        this.isFavorite = isFavorite
     }
 
     override fun toString(): String {
