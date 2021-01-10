@@ -7,7 +7,7 @@ import br.com.claudiogalvao.catalogofilmes.data.local.datasource.LocalDatasource
 import br.com.claudiogalvao.catalogofilmes.data.remote.datasource.RemoteDatasource
 import br.com.claudiogalvao.catalogofilmes.di.FilmesModule
 import br.com.claudiogalvao.catalogofilmes.domain.repository.FilmesRepository
-import br.com.claudiogalvao.catalogofilmes.domain.usecase.ListaFilmesCasoDeUso
+import br.com.claudiogalvao.catalogofilmes.domain.usecase.FilmesCasoDeUso
 
 class MyApplication : Application() {
 
@@ -28,6 +28,6 @@ class MyApplication : Application() {
             FilmesRepository(context = this,
                 datasourceLocal = localDatasource,
                 datasourceRemoto = remoteDatasource)
-        FilmesModule.filmesCasoDeUso = ListaFilmesCasoDeUso(repository)
+        FilmesModule.filmesCasoDeUso = FilmesCasoDeUso(repository)
     }
 }

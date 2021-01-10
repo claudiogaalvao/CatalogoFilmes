@@ -23,6 +23,10 @@ class FilmesRepository(private val context: Context,
         }
     }
 
+    fun atualizaFilme(filme: Filme) {
+        datasourceLocal.atualizarFilme(filme)
+    }
+
     private fun carregarDadosLocal(callback: FilmesCallback) {
         datasourceLocal.listaFilmes(object : FilmesCallback {
             override fun onSuccess(listaFilmes: List<Filme>) {

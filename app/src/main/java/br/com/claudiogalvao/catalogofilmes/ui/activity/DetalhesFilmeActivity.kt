@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.view.MenuItemCompat
 import br.com.claudiogalvao.catalogofilmes.R
+import br.com.claudiogalvao.catalogofilmes.di.FilmesModule
 import br.com.claudiogalvao.catalogofilmes.domain.model.Filme
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_detalhes_filme.*
@@ -53,12 +54,14 @@ class DetalhesFilmeActivity : AppCompatActivity() {
     private fun changeIconFavorite() {
         if(favoriteItemMenu.icon.constantState!!.equals(resources.getDrawable(R.drawable.ic_favorite).constantState)) {
             filme.setIsFavorite(false);
+            FilmesModule.filmesCasoDeUso.atualizar(filme)
             Toast.makeText(this, "Removido dos favoritos", Toast.LENGTH_SHORT).show()
             favoriteItemMenu.setIcon(R.drawable.ic_favorite_border)
             return;
         }
 
         filme.setIsFavorite(true);
+        FilmesModule.filmesCasoDeUso.atualizar(filme)
         Toast.makeText(this, "Adicionado aos favoritos", Toast.LENGTH_SHORT).show()
         favoriteItemMenu.setIcon(R.drawable.ic_favorite)
     }
