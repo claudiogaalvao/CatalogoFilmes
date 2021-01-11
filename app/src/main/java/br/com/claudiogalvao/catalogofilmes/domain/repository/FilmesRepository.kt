@@ -23,6 +23,10 @@ class FilmesRepository(private val context: Context,
         }
     }
 
+    fun listaFilmesFavoritos(callback: FilmesCallback) {
+        datasourceLocal.listaFilmesFavoritos(callback)
+    }
+
     fun atualizaFilme(filme: Filme) {
         datasourceLocal.atualizarFilme(filme)
     }

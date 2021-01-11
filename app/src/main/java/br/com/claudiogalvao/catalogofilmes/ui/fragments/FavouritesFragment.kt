@@ -46,7 +46,7 @@ class FavouritesFragment : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.M)
     private fun carregaFilmesNaLista() {
-        FilmesModule.filmesCasoDeUso.executar(object : FilmesCallback {
+        FilmesModule.filmesCasoDeUso.getFilmesFavoritos(object : FilmesCallback {
             override fun onSuccess(listaFilmes: List<Filme>) {
                 if(listaFilmes.isNotEmpty()) {
                     populaListaDeFilmes(listaFilmes)
@@ -57,11 +57,11 @@ class FavouritesFragment : Fragment() {
             override fun onError(e: Throwable) {
                 Toast.makeText(
                     context,
-                    "Sem conexão...",
+                    "Nenhum filme favorito...",
                     Toast.LENGTH_LONG
                 ).show()
             }
-        }, true)
+        })
     }
 
     private fun populaListaDeFilmes(listaFilmes: List<Filme>) {/*

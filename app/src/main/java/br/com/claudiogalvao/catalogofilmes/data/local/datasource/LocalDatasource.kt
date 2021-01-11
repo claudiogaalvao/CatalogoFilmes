@@ -14,8 +14,14 @@ class LocalDatasource(val dao: FilmeDAO) {
         callback.onSuccess(filmes)
     }
 
+    fun listaFilmesFavoritos(callback: FilmesCallback) {
+        val filmes = dao.getFavoriteMovies().map {
+            FilmesMapper.mapFilmesBD(it)
+        }
+        callback.onSuccess(filmes)
+    }
+
     fun atualizarFilme(filme: Filme) {
-        val filmeBD = FilmesMapper.mapFilmes(filme);
-        dao.update(filmeBD)
+        dao.setIsFavorite(filme.isFavorite, filme.id)
     }
 }

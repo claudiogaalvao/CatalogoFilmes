@@ -10,6 +10,10 @@ class FilmesCasoDeUso(private val repository: FilmesRepository) {
         repository.listaFilmes(callback, carregarCash)
     }
 
+    fun getFilmesFavoritos(callback: FilmesCallback) {
+        repository.listaFilmesFavoritos(callback)
+    }
+
     fun atualizar(filme: Filme) {
         repository.atualizaFilme(filme)
     }
